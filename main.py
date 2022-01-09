@@ -7,8 +7,7 @@ def pullFolder(folder):
 def pushFolder(folder):
     print("Uploading Folder:", folder)
 
-## Main thread check
-if __name__ == '__main__':
+def main():
     ## Setup the command-line arguments
     argParser = ArgumentParser(description='A Python app for syncing my WoW Addons and UI folder between machines')
     argParser.add_argument("-m", "--mode", dest="mode", choices=["pull", "push"], help="The sync mode, push or pull", type=str, default="pull")
@@ -46,3 +45,7 @@ if __name__ == '__main__':
 
         else:
             print("Pushing Unknown Folder")
+
+## Main thread check
+if __name__ == '__main__':
+    main()
