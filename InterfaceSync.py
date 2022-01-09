@@ -43,6 +43,7 @@ class InterfaceSync:
         ## Unzip the folder from Google drive to the target destination
         shutil.unpack_archive(sourcePath, extract_dir=targetPath)
 
+
     ## Push the target folder
     def __pushFolder(self):
         ## User selected the UI to sync
@@ -68,8 +69,9 @@ class InterfaceSync:
         ## make_archive creates the zip in the same directory, so copy the output zip to the target location
         shutil.move(createdZip, targetPath + zipOutputName)
 
+
     ## Execution of the App
-    def Run(self):
+    def run(self):
         ## Check the Sync mode - Pull/Push
         if self.mode == "pull":
             ## Update the local files

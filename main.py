@@ -18,7 +18,8 @@ def main():
 
     ## Create the app and run
     app = InterfaceSync(args.config, args.mode, args.target)
-    app.Run()
+    app.run()
+
 
 ## Main thread check
 if __name__ == '__main__':
