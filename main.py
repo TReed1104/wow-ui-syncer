@@ -1,27 +1,19 @@
 ## Imports
 from argparse import ArgumentParser
 import shutil
-
-## Path Variables
-installPathBase = ":\\Program Files (x86)\\World of Warcraft\\_classic_\\"
-addonsDirectory = installPathBase + "Interface\\"
-uiDirectory = installPathBase + "WTF\\Account\\"
-googleDrivePath = "C:\\Users\\treed\\Google Drive\\Games\\Wow\\"
-
-## Account Varialbes
-accountName = "FALCO985"
+import json
 
 
 ## Pull the target folder
-def pullFolder(args):
+def pullFolder(args, config):
     ## User selected the UI to sync
     if args.target == "UI":
-        sourcePath = f"{googleDrivePath}{accountName}.zip"
-        targetPath = f"{args.drive}{uiDirectory}{accountName}"
+        sourcePath = f"{config['google_drive_path']}{config['account_name']}.zip"
+        targetPath = f"{config['wow_install_path']}{config['ui_directory']}{config['account_name']}"
     ## User selected the Addons folder to sync
     elif args.target == "Addons":
-        sourcePath = f"{googleDrivePath}Addons.zip"
-        targetPath = f"{args.drive}{addonsDirectory}Addons"
+        sourcePath = f"{config['google_drive_path']}Addons.zip"
+        targetPath = f"{config['wow_install_path']}{config['addons_directory']}Addons"
     else:
         ## Target is unrecognised
         print(">>> ERROR: Unknown Target type")
@@ -35,16 +27,16 @@ def pullFolder(args):
 
 
 ## Push the target folder
-def pushFolder(args):
+def pushFolder(args, config):
     ## User selected the UI to sync
     if args.target == "UI":
-        sourcePath = f"{args.drive}{uiDirectory}{accountName}"
-        targetPath = f"{googleDrivePath}"
-        zipOutputName = f"{accountName}.zip"
+        sourcePath = f"{config['wow_install_path']}{config['ui_directory']}{config['account_name']}"
+        targetPath = f"{config['google_drive_path']}"
+        zipOutputName = f"{config['account_name']}.zip"
     ## User selected the Addons folder to sync
     elif args.target == "Addons":
-        sourcePath = f"{args.drive}{addonsDirectory}Addons"
-        targetPath = f"{googleDrivePath}"
+        sourcePath = f"{config['wow_install_path']}{config['addons_directory']}Addons"
+        targetPath = f"{config['google_drive_path']}"
         zipOutputName = f"Addons.zip"
     else:
         ## Target is unrecognised
@@ -67,13 +59,12 @@ def main():
         description=
         'A Python app for syncing my WoW Addons and UI folder between machines'
     )
-    argParser.add_argument("-d",
-                           "--drive",
-                           dest="drive",
-                           choices=["C", "D"],
-                           help="The drive WoW i",
+    argParser.add_argument("-i",
+                           "--input",
+                           dest="config",
+                           help="The config file to use",
                            type=str,
-                           default="C")
+                           default="config.json")
     argParser.add_argument("-m",
                            "--mode",
                            dest="mode",
@@ -87,10 +78,15 @@ def main():
                            choices=["UI", "Addons"],
                            help="The folder to sync",
                            type=str,
-                           default="ui")
+                           default="UI")
 
     ## Parse the arguments from the command line to be usable
     args = argParser.parse_args()
+
+    ## Load the config json
+    configFile = open(args.config)
+    configData = json.load(configFile)
+    configFile.close()
 
     ## Entry point output, just for context in the command-lines installed on
     print("> Syncing WoW Folders")
@@ -98,10 +94,10 @@ def main():
     ## Check the Sync mode - Pull/Push
     if args.mode == "pull":
         ## Update the local files
-        pullFolder(args)
+        pullFolder(args, configData)
     elif args.mode == "push":
         ## Update the Google drive files
-        pushFolder(args)
+        pushFolder(args, configData)
 
 
 ## Main thread check
