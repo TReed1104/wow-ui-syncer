@@ -24,6 +24,7 @@ def pullFolder(args):
         targetPath = f"{args.drive}{addonsDirectory}Addons"
     else:
         ## Target is unrecognised
+        print(">>> ERROR: Unknown Target type")
         return
 
     ## Console output
@@ -47,6 +48,7 @@ def pushFolder(args):
         zipOutputName = f"Addons.zip"
     else:
         ## Target is unrecognised
+        print(">>> ERROR: Unknown Target type")
         return
 
     ## Console output
