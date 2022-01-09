@@ -64,7 +64,7 @@ def main():
                            dest="config",
                            help="The config file to use",
                            type=str,
-                           default="config.json")
+                           default="configs/config.json")
     argParser.add_argument("-m",
                            "--mode",
                            dest="mode",
@@ -72,7 +72,7 @@ def main():
                            help="The sync mode, push or pull",
                            type=str,
                            default="pull")
-    argParser.add_argument("-f",
+    argParser.add_argument("-t",
                            "--target",
                            dest="target",
                            choices=["UI", "Addons"],
