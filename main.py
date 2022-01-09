@@ -97,7 +97,6 @@ def main():
     if args.mode == "pull":
         ## Update the local files
         pullFolder(args)
-
     elif args.mode == "push":
         ## Update the Google drive files
         pushFolder(args)
