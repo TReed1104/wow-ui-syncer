@@ -5,21 +5,44 @@ from argparse import ArgumentParser
 installPathBase = ":\\Program Files (x86)\\World of Warcraft\\_classic_\\"
 addonsDirectory = installPathBase + "Interface\\AddOns"
 uiDirectory = installPathBase +  "WTF\\Account\\"
-googleDrivePath = "C:\\Users\\treed\\Google Drive\\Games\\Wow"
+googleDrivePath = "C:\\Users\\treed\\Google Drive\\Games\\Wow\\"
 
-## Folder Varialbes
+## Target Varialbes
 accountName = "FALCO985"
 syncedUIFolder = accountName + ".zip"
 syncedAddonsFolder = "Addons.zip"
 
 ## Pull the target folder
-def pullFolder(drive, folder):
-    print("Downloading Folder:", drive, folder)
+def pullFolder(target, drive):
+    ## User selected the UI to sync
+    if target == "UI":
+        sourcePath = f"{googleDrivePath}{accountName}.zip"
+        targetPath = f"{drive}{uiDirectory}{accountName}"
+
+    ## User selected the Addons folder to sync
+    elif target == "Addons":
+        sourcePath = f"{googleDrivePath}Addons.zip"
+        targetPath = f"{drive}{addonsDirectory}"
+
+    ## Console output
+    print(sourcePath, "-->", targetPath)
 
 ## Push the target folder
-def pushFolder(drive, folder):
-    print("Uploading Folder:", drive, folder)
+def pushFolder(target, drive):
+    ## User selected the UI to sync
+    if target == "UI":
+        sourcePath = f"{drive}{uiDirectory}{accountName}"
+        targetPath = f"{googleDrivePath}{accountName}.zip"
 
+    ## User selected the Addons folder to sync
+    elif target == "Addons":
+        sourcePath = f"{drive}{addonsDirectory}"
+        targetPath = f"{googleDrivePath}Addons.zip"
+
+    ## Console output
+    print(sourcePath, "-->", targetPath)
+
+## App Main
 def main():
     ## Setup the command-line arguments
     argParser = ArgumentParser(description='A Python app for syncing my WoW Addons and UI folder between machines')
@@ -38,11 +61,11 @@ def main():
         ## Check which folder we're Syncing
         if args.target == "UI":
             ## Pull the UI Folder
-            pullFolder(args.drive, args.target)
+            pullFolder(args.target, args.drive)
 
         elif args.target == "Addons":
             ## Pull the Addons Folder
-            pullFolder(args.drive, args.target)
+            pullFolder(args.target, args.drive)
 
         else:
             print("Pulling Unknown Folder")
@@ -51,11 +74,11 @@ def main():
         ## Check which folder we're Syncing
         if args.target == "UI":
             ## Push the UI Folder
-            pushFolder(args.drive, args.target)
+            pushFolder(args.target, args.drive)
 
         elif args.target == "Addons":
             ## Push the Addons Folder
-            pushFolder(args.drive, args.target)
+            pushFolder(args.target, args.drive)
 
         else:
             print("Pushing Unknown Folder")
