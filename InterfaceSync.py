@@ -25,16 +25,16 @@ class InterfaceSync:
     ## Pull the target folder
     def __pullFolder(self):
         ## User selected the UI to sync
-        if self.target == "UI":
+        if self.target.upper() == "UI":
             sourcePath = f"{self.installPathGoogleDrive}{self.accountName}.zip"
             targetPath = f"{self.installPathWarcraft}{self.directoryUI}{self.accountName}"
         ## User selected the Addons folder to sync
-        elif self.target == "Addons":
+        elif self.target.upper() == "ADDONS":
             sourcePath = f"{self.installPathGoogleDrive}Addons.zip"
             targetPath = f"{self.installPathWarcraft}{self.directoryAddons}Addons"
         else:
             ## Target is unrecognised
-            print(">>> ERROR: Unknown Target type")
+            print(">>> ERROR: Unknown target for Pull request:", self.target)
             return
 
         ## Console output
@@ -47,18 +47,18 @@ class InterfaceSync:
     ## Push the target folder
     def __pushFolder(self):
         ## User selected the UI to sync
-        if self.target == "UI":
+        if self.target.upper() == "UI":
             sourcePath = f"{self.installPathWarcraft}{self.directoryUI}{self.accountName}"
             targetPath = f"{self.installPathGoogleDrive}"
             zipOutputName = f"{self.accountName}.zip"
         ## User selected the Addons folder to sync
-        elif self.target == "Addons":
+        elif self.target.upper() == "ADDONS":
             sourcePath = f"{self.installPathWarcraft}{self.directoryAddons}Addons"
             targetPath = f"{self.installPathGoogleDrive}"
             zipOutputName = f"Addons.zip"
         else:
             ## Target is unrecognised
-            print(">>> ERROR: Unknown Target type")
+            print(">>> ERROR: Unknown target for Push request:", self.target)
             return
 
         ## Console output
@@ -73,9 +73,9 @@ class InterfaceSync:
     ## Execution of the App
     def run(self):
         ## Check the Sync mode - Pull/Push
-        if self.mode == "pull":
+        if self.mode.upper() == "PULL":
             ## Update the local files
             self.__pullFolder()
-        elif self.mode == "push":
+        elif self.mode.upper() == "PUSH":
             ## Update the Google drive files
             self.__pushFolder()
