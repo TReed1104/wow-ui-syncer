@@ -8,7 +8,7 @@ def main():
     argParser = ArgumentParser(description="A Python app for syncing my WoW Addons and UI folder between machines")
     argParser.add_argument("-i", "--input", dest="config", help="The config file to use", type=str, default="configs/config.json")
     argParser.add_argument("-m", "--mode", dest="mode", choices=["pull", "Pull", "push", "Push"], help="The sync mode, push or pull", type=str, default="pull")
-    argParser.add_argument("-t", "--target", dest="target", choices=["UI", "ui", "Addons", "addons"], help="The folder to sync", type=str, default="UI")
+    argParser.add_argument("-t", "--target", dest="target", choices=["UI", "ui", "Addons", "addons", "All", "all"], help="The folder to sync", type=str, default="UI")
 
     ## Parse the arguments from the command line to be usable
     args = argParser.parse_args()
