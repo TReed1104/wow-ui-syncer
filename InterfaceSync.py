@@ -61,6 +61,26 @@ class InterfaceSync:
 
     ## Push the target folder
     def __pushFolder(self):
+        if self.target.upper() == "ALL":
+            ## UI sync
+            sourcePath = f"{self.installPathWarcraft}{self.directoryUI}{self.accountName}"
+            targetPath = f"{self.installPathGoogleDrive}"
+            zipOutputName = f"{self.accountName}.zip"
+            print(">> Push:", sourcePath, "-->", targetPath)
+            createdZip = shutil.make_archive(sourcePath, "zip", sourcePath)
+            shutil.move(createdZip, targetPath + zipOutputName)
+
+            ## Addon sync
+            sourcePath = f"{self.installPathWarcraft}{self.directoryAddons}Addons"
+            targetPath = f"{self.installPathGoogleDrive}"
+            zipOutputName = f"Addons.zip"
+            print(">> Push:", sourcePath, "-->", targetPath)
+            createdZip = shutil.make_archive(sourcePath, "zip", sourcePath)
+            shutil.move(createdZip, targetPath + zipOutputName)
+
+            ## Done
+            return
+
         ## User selected the UI to sync
         if self.target.upper() == "UI":
             sourcePath = f"{self.installPathWarcraft}{self.directoryUI}{self.accountName}"
