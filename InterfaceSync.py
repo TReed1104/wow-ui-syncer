@@ -24,6 +24,21 @@ class InterfaceSync:
 
     ## Pull the target folder
     def __pullFolder(self):
+        if self.target.upper() == "ALL":
+            ## UI sync
+            sourcePath = f"{self.installPathGoogleDrive}{self.accountName}.zip"
+            targetPath = f"{self.installPathWarcraft}{self.directoryUI}{self.accountName}"
+            print(">> Pull:", sourcePath, "-->", targetPath)
+            shutil.unpack_archive(sourcePath, extract_dir=targetPath)
+            ## Addon sync
+            sourcePath = f"{self.installPathGoogleDrive}Addons.zip"
+            targetPath = f"{self.installPathWarcraft}{self.directoryAddons}Addons"
+            print(">> Pull:", sourcePath, "-->", targetPath)
+            shutil.unpack_archive(sourcePath, extract_dir=targetPath)
+
+            ## Done
+            return
+
         ## User selected the UI to sync
         if self.target.upper() == "UI":
             sourcePath = f"{self.installPathGoogleDrive}{self.accountName}.zip"
